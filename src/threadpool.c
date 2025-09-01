@@ -46,8 +46,8 @@ u32 maio_threadpool_init(){
     pool.thread_count = MAIO_MAX_THREADS;
     pool.shut_down = false;
 
-    queue_t* q = (queue_t*)malloc(sizeof(queue_t));
-    pool.task_queue = queue_init(q);
+    pool.task_queue = (queue_t*)malloc(sizeof(queue_t));
+    queue_init(pool.task_queue);
 
     if(maio_mutex_init(&pool.lock) != 0) exit(EXIT_FAILURE);
 
