@@ -61,7 +61,7 @@ u32 maio_threadpool_init(){
         }
     }
 
-    return MAIO_OK;
+    return 0;
 }
 
 
