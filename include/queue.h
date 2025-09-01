@@ -12,8 +12,6 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <stdlib.h>
-#include <stdbool.h>
 #include "typedefs.h"
 
 typedef struct queue_node queue_node_t;

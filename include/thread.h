@@ -1,13 +1,13 @@
 /*
- * @file thread.h
- *
- *  Created on: Aug 27, 2025
- *      Author: Josu Alexandru
- *  This file provides a cross-platform abstraction for threading primitives such as mutexes,
- *  condition variables, and reader-writer locks. It supports both Windows and POSIX systems.
- *  The implementation uses Windows API on Windows and pthreads on POSIX systems.
- *  It includes functions to initialize, lock, unlock, and destroy these primitives.
- * 
+    * @file thread.h
+    *
+    *  Created on: 2025-08-27
+    *      Author: Josu Alexandru
+    *  This file provides a cross-platform abstraction for threading primitives such as mutexes,
+    *  condition variables, and reader-writer locks. It supports both Windows and POSIX systems.
+    *  The implementation uses Windows API on Windows and pthreads on POSIX systems.
+    *  It includes functions to initialize, lock, unlock, and destroy these primitives.
+    * 
 */
 
 #ifndef THREAD_H

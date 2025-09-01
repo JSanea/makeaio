@@ -1,5 +1,12 @@
-#ifndef TYPEDIFS_H
-#define TYPEDIFS_H
+/*
+* @file typedefs.h
+*  Created on: 2025-08-01
+*       Author: Josu Alexandru
+*
+*/
+
+#ifndef TYPEDEFS_H
+#define TYPEDEFS_H
 
 // 8-bit integer types
 typedef char s8;
@@ -22,4 +29,4 @@ typedef float f32;
 typedef double f64;
 
 
-#endif // TYPEDIFS_H
+#endif // TYPEDEFS_H

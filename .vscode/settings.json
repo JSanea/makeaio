@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "queue.h": "c",
+        "thread.h": "c",
+        "config.h": "c",
+        "maio.h": "c"
+    }
+}

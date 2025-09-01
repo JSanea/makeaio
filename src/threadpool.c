@@ -1,1 +1,67 @@
+/*
+    * @file threadpool.c
+    *
+    *  Created on: 2025-08-28
+    *      Author: Josu Alexandru
+*/
+
+#include "maio.h"
 #include "threadpool.h"
+
+static maio_threadpool_t pool;
+
+
+static void* maio_worker(void* arg){
+    (void)arg; 
+
+    while(true){
+        maio_mutex_lock(&pool->lock);
+
+        bool empty = is_empty(&pool->task_queue);
+        bool shutting_down = pool->shut_down;
+
+        while(empty && !shutting_down){
+            maio_cond_wait(&pool->notify, &pool->lock);
+        }
+
+        if(empty && shutting_down){
+            maio_mutex_unlock(&pool->lock);
+            break;
+        }
+
+        maio_task_t* task = (maio_task_t*)dequeue(&pool->task_queue);
+
+        maio_mutex_unlock(&pool->lock);
+
+        if(task){
+            task->func(task->arg);
+            free(task);
+        }
+    }
+
+    return NULL;
+}
+
+u32 maio_threadpool_init(){
+    pool.thread_count = MAIO_MAX_THREADS;
+    pool.shut_down = false;
+
+    queue_t* q = (queue_t*)malloc(sizeof(queue_t));
+    pool.task_queue = queue_init(q);
+
+    if(maio_mutex_init(&pool.lock) != 0) exit(EXIT_FAILURE);
+
+    if(maio_cond_init(&pool.notify) != 0) exit(EXIT_FAILURE);
+
+    pool.threads = (maio_thread_t*)malloc(sizeof(maio_thread_t) * pool.thread_count);
+
+    for(u32 i = 0; i < pool.thread_count; i++){
+        if(maio_thread_create(&pool.threads[i], maio_worker, NULL) != 0){
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    return MAIO_OK;
+}
+
+
