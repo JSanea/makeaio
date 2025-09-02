@@ -64,4 +64,23 @@ u32 maio_threadpool_init(){
     return 0;
 }
 
+u32 maio_threadpool_submit(void (*func)(void*), void* arg){
+    if(func == NULL) return -1;
+
+    maio_task_t* task = (maio_task_t*)malloc(sizeof(maio_task_t));
+    if(task == NULL) return -1;
+
+    task->func = func;
+    task->arg = arg;
+
+    maio_mutex_lock(&pool.lock);
+
+    enqueue(pool.task_queue, task);
+
+    maio_cond_signal(&pool.notify);
+    maio_mutex_unlock(&pool.lock);
+
+    return 0;
+}
+
 
