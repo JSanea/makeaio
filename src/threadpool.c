@@ -83,4 +83,25 @@ u32 maio_threadpool_submit(void (*func)(void*), void* arg){
     return 0;
 }
 
+u32 maio_threadpool_shutdown(){
+    maio_mutex_lock(&pool.lock);
+    pool.shut_down = true;
+    maio_cond_broadcast(&pool.notify);
+    maio_mutex_unlock(&pool.lock);
+
+    for(u32 i = 0; i < pool.thread_count; i++){
+        maio_thread_join(pool.threads[i], NULL);
+    }
+
+    free(pool.threads);
+    queue_destroy(pool.task_queue);
+    free(pool.task_queue);
+
+    maio_mutex_destroy(&pool.lock);
+    maio_cond_destroy(&pool.notify);
+
+    return 0;
+}
+
+
 

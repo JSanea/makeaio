@@ -32,7 +32,7 @@ typedef struct {
 
 extern u32 maio_threadpool_init();
 extern u32 maio_threadpool_submit(void (*function)(void*), void* arg);
-extern u32 maio_threadpool_destroy();
+extern u32 maio_threadpool_shutdown();
 
 
 #endif //THREAD_POOL_H
