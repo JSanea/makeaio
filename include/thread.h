@@ -61,36 +61,36 @@ typedef struct {
 /*
 * Thread functions
 */
-extern u32 maio_thread_create(maio_thread_t* thread, void* (*start_routine)(void*), void* arg);
-extern u32 maio_thread_join(maio_thread_t* thread);
-extern u32 maio_thread_detach(maio_thread_t* thread);
+extern s32 maio_thread_create(maio_thread_t* thread, void* (*start_routine)(void*), void* arg);
+extern s32 maio_thread_join(maio_thread_t* thread);
+extern s32 maio_thread_detach(maio_thread_t* thread);
 extern void maio_thread_exit(void* retval);     
 
 /*
 * Mutex functions
 */
-extern u32 maio_mutex_init(maio_mutex_t* mutex);
-extern u32 maio_mutex_lock(maio_mutex_t* mutex);        
-extern u32 maio_mutex_unlock(maio_mutex_t* mutex);
-extern u32 maio_mutex_destroy(maio_mutex_t* mutex);
+extern s32 maio_mutex_init(maio_mutex_t* mutex);
+extern s32 maio_mutex_lock(maio_mutex_t* mutex);        
+extern s32 maio_mutex_unlock(maio_mutex_t* mutex);
+extern s32 maio_mutex_destroy(maio_mutex_t* mutex);
 
 /*
 * Condition variable functions
 */
-extern u32 maio_cond_init(maio_cond_t* cond);
-extern u32 maio_cond_wait(maio_cond_t* cond, maio_mutex_t* mutex);
-extern u32 maio_cond_signal(maio_cond_t* cond);     
-extern u32 maio_cond_broadcast(maio_cond_t* cond);
-extern u32 maio_cond_destroy(maio_cond_t* cond);
+extern s32 maio_cond_init(maio_cond_t* cond);
+extern s32 maio_cond_wait(maio_cond_t* cond, maio_mutex_t* mutex);
+extern s32 maio_cond_signal(maio_cond_t* cond);     
+extern s32 maio_cond_broadcast(maio_cond_t* cond);
+extern s32 maio_cond_destroy(maio_cond_t* cond);
 
 /*
 * Reader-writer lock functions
 */      
-extern u32 maio_rwlock_init(maio_rwlock_t* lock);
-extern u32 maio_rwlock_rdlock(maio_rwlock_t* lock);
-extern u32 maio_rwlock_wrlock(maio_rwlock_t* lock);
-extern u32 maio_rwlock_unlock(maio_rwlock_t* lock);
-extern u32 maio_rwlock_destroy(maio_rwlock_t* lock);
+extern s32 maio_rwlock_init(maio_rwlock_t* lock);
+extern s32 maio_rwlock_rdlock(maio_rwlock_t* lock);
+extern s32 maio_rwlock_wrlock(maio_rwlock_t* lock);
+extern s32 maio_rwlock_unlock(maio_rwlock_t* lock);
+extern s32 maio_rwlock_destroy(maio_rwlock_t* lock);
 
 
 #endif //THREAD_h

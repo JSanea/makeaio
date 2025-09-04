@@ -9,7 +9,7 @@
 #include "thread.h"
 
 
-u32 maio_thread_create(maio_thread_t* t, void* (*start_routine)(void*), void* arg){
+s32 maio_thread_create(maio_thread_t* t, void* (*start_routine)(void*), void* arg){
     if(!t || !start_routine) return -1;
     #if defined(_WIN32)
         t->handle = CreateThread(
@@ -33,7 +33,7 @@ u32 maio_thread_create(maio_thread_t* t, void* (*start_routine)(void*), void* ar
     return 0;
 }
 
-u32 maio_thread_join(maio_thread_t* t){
+s32 maio_thread_join(maio_thread_t* t){
     if(!t) return -1;
     #if defined(_WIN32)
         WaitForSingleObject(t->handle, INFINITE);
@@ -48,7 +48,7 @@ u32 maio_thread_join(maio_thread_t* t){
     return 0;
 }
 
-u32 maio_thread_detach(maio_thread_t* t){
+s32 maio_thread_detach(maio_thread_t* t){
     if(!t) return -1;
     #if defined(_WIN32)
         CloseHandle(t->handle);
@@ -70,7 +70,7 @@ void maio_thread_exit(void* retval){
     #endif
 }
 
-u32 maio_mutex_init(maio_mutex_t* m){
+s32 maio_mutex_init(maio_mutex_t* m){
     if(!m) return -1;
     #if defined(_WIN32)
         InitializeCriticalSection(&m->cs);
@@ -83,7 +83,7 @@ u32 maio_mutex_init(maio_mutex_t* m){
     return 0;
 }
 
-u32 maio_mutex_lock(maio_mutex_t* m){
+s32 maio_mutex_lock(maio_mutex_t* m){
     if(!m) return -1;
     #if defined(_WIN32)
         EnterCriticalSection(&m->cs);
@@ -96,7 +96,7 @@ u32 maio_mutex_lock(maio_mutex_t* m){
     return 0;
 }
 
-u32 maio_mutex_unlock(maio_mutex_t* m){
+s32 maio_mutex_unlock(maio_mutex_t* m){
     if(!m) return -1;
     #if defined(_WIN32)
         LeaveCriticalSection(&m->cs);
@@ -109,7 +109,7 @@ u32 maio_mutex_unlock(maio_mutex_t* m){
     return 0;
 }
 
-u32 maio_mutex_destroy(maio_mutex_t* m){
+s32 maio_mutex_destroy(maio_mutex_t* m){
     if(!m) return -1;
     #if defined(_WIN32)
         DeleteCriticalSection(&m->cs);
@@ -122,7 +122,7 @@ u32 maio_mutex_destroy(maio_mutex_t* m){
     return 0;
 }
 
-u32 maio_cond_init(maio_cond_t* c){
+s32 maio_cond_init(maio_cond_t* c){
     if(!c) return -1;
     #if defined(_WIN32)
         InitializeConditionVariable(&c->cond);
@@ -136,7 +136,7 @@ u32 maio_cond_init(maio_cond_t* c){
     return 0;
 }
 
-u32 maio_cond_wait(maio_cond_t* c, maio_mutex_t* m){
+s32 maio_cond_wait(maio_cond_t* c, maio_mutex_t* m){
     if(!c || !m) return -1;
     #if defined(_WIN32)
         SleepConditionVariableCS(&c->cond, &m->cs, INFINITE);
@@ -149,7 +149,7 @@ u32 maio_cond_wait(maio_cond_t* c, maio_mutex_t* m){
     return 0;
 }
 
-u32 maio_cond_signal(maio_cond_t* c){
+s32 maio_cond_signal(maio_cond_t* c){
     if(!c) return -1;
     #if defined(_WIN32)
         WakeConditionVariable(&c->cond);
@@ -162,7 +162,7 @@ u32 maio_cond_signal(maio_cond_t* c){
     return 0;
 }
 
-u32 maio_cond_broadcast(maio_cond_t* c){
+s32 maio_cond_broadcast(maio_cond_t* c){
     if(!c) return -1;
     #if defined(_WIN32)
         WakeAllConditionVariable(&c->cond);
@@ -175,7 +175,7 @@ u32 maio_cond_broadcast(maio_cond_t* c){
     return 0;
 }
 
-u32 maio_cond_destroy(maio_cond_t* c){
+s32 maio_cond_destroy(maio_cond_t* c){
     if(!c) return -1;
     #if !defined(_WIN32)
         if(pthread_cond_destroy(&c->cond) != 0){
@@ -186,7 +186,7 @@ u32 maio_cond_destroy(maio_cond_t* c){
     return 0;
 }
 
-u32 maio_rwlock_init(maio_rwlock_t* rwlock){
+s32 maio_rwlock_init(maio_rwlock_t* rwlock){
     if(!rwlock) return -1;
     #if defined(_WIN32)
         InitializeSRWLock(&rwlock->rw_lock);
@@ -199,7 +199,7 @@ u32 maio_rwlock_init(maio_rwlock_t* rwlock){
     return 0;
 }
 
-u32 maio_rwlock_rdlock(maio_rwlock_t* rwlock){
+s32 maio_rwlock_rdlock(maio_rwlock_t* rwlock){
     if(!rwlock) return -1;
     #if defined(_WIN32)
         AcquireSRWLockShared(&rwlock->rw_lock);
@@ -212,7 +212,7 @@ u32 maio_rwlock_rdlock(maio_rwlock_t* rwlock){
     return 0;
 }
 
-u32 maio_rwlock_wrlock(maio_rwlock_t* rwlock){
+s32 maio_rwlock_wrlock(maio_rwlock_t* rwlock){
     if(!rwlock) return -1;
     #if defined(_WIN32)
         AcquireSRWLockExclusive(&rwlock->rw_lock);
@@ -225,7 +225,7 @@ u32 maio_rwlock_wrlock(maio_rwlock_t* rwlock){
     return 0;
 }
 
-u32 maio_rwlock_unlock(maio_rwlock_t* rwlock){
+s32 maio_rwlock_unlock(maio_rwlock_t* rwlock){
     if(!rwlock) return -1;
     #if defined(_WIN32)
         ReleaseSRWLockShared(&rwlock->rw_lock);
@@ -238,7 +238,7 @@ u32 maio_rwlock_unlock(maio_rwlock_t* rwlock){
     return 0;
 }
 
-u32 maio_rwlock_destroy(maio_rwlock_t* rwlock){
+s32 maio_rwlock_destroy(maio_rwlock_t* rwlock){
     if(!rwlock) return -1;
     #if !defined(_WIN32)
         if(pthread_rwlock_destroy(&rwlock->rw_lock) != 0){

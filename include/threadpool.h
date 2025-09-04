@@ -30,9 +30,9 @@ typedef struct {
     bool shut_down;          // Flag to indicate if the pool is shutting down
 } maio_threadpool_t;
 
-extern u32 maio_threadpool_init();
-extern u32 maio_threadpool_submit(void (*function)(void*), void* arg);
-extern u32 maio_threadpool_shutdown();
+extern s32 maio_threadpool_init();
+extern s32 maio_threadpool_submit(void (*function)(void*), void* arg);
+extern s32 maio_threadpool_shutdown();
 
 
 #endif //THREAD_POOL_H

@@ -42,7 +42,7 @@ static void* maio_worker(void* arg){
     return NULL;
 }
 
-u32 maio_threadpool_init(){
+s32 maio_threadpool_init(){
     pool.thread_count = MAIO_MAX_THREADS;
     pool.shut_down = false;
 
@@ -64,7 +64,7 @@ u32 maio_threadpool_init(){
     return 0;
 }
 
-u32 maio_threadpool_submit(void (*func)(void*), void* arg){
+s32 maio_threadpool_submit(void (*func)(void*), void* arg){
     if(func == NULL) return -1;
 
     maio_task_t* task = (maio_task_t*)malloc(sizeof(maio_task_t));
@@ -83,7 +83,7 @@ u32 maio_threadpool_submit(void (*func)(void*), void* arg){
     return 0;
 }
 
-u32 maio_threadpool_shutdown(){
+s32 maio_threadpool_shutdown(){
     maio_mutex_lock(&pool.lock);
     pool.shut_down = true;
     maio_cond_broadcast(&pool.notify);
