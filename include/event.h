@@ -37,9 +37,9 @@ enum {
 
 typedef struct event_ctx_s{
     maio_event_type_e type;  // event type
-    callback_t cb;     // callback function
+    callback_t cb;           // callback function
     void* arg;               // argument for callback function
-    maio_buff_span_t buff; // associated buffer
+    maio_buff_span_t buff;   // associated buffer
 }maio_event_ctx_t;
 
 
@@ -63,6 +63,12 @@ typedef struct event_s {
 
 static inline void maio_free_event(maio_event_t* ev){
     if(ev == NULL) return;
+    if(ev->ctx){
+        if (ev->ctx->buff){
+            free(ev->ctx->buff);
+        }
+        free(ev->ctx);
+    };
     free(ev);
 }
 

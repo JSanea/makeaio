@@ -1,5 +1,5 @@
 /*
-    * @file threadpool.c
+    * @file thread.c
     * 
     *  Created on: 2025-08-28
     *      Author: Josu Alexandru
