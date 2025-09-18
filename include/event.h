@@ -63,13 +63,18 @@ typedef struct event_s {
 
 static inline void maio_free_event(maio_event_t* ev){
     if(ev == NULL) return;
+
     if(ev->ctx){
-        if (ev->ctx->buff){
-            free(ev->ctx->buff);
+        if (ev->ctx->buff.data){
+            free(ev->ctx->buff.data);
+            ev->ctx->buff.data = NULL;
         }
         free(ev->ctx);
+        ev->ctx = NULL;
     };
+    
     free(ev);
+    ev = NULL;
 }
 
 
