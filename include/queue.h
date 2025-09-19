@@ -85,6 +85,7 @@ static inline void queue_destroy(queue_t* q){
         queue_node_t* temp = current;
         current = current->next;
         free(temp);
+        temp = NULL;
     }
 
     q->front = NULL;

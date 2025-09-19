@@ -36,6 +36,7 @@ static void* maio_worker(void* arg){
         if(task){
             task->func(task->arg);
             free(task);
+            task = NULL;
         }
     }
 
@@ -96,6 +97,9 @@ s32 maio_threadpool_shutdown(){
     free(pool.threads);
     queue_destroy(pool.task_queue);
     free(pool.task_queue);
+
+    pool.threads = NULL;
+    pool.task_queue = NULL;
 
     maio_mutex_destroy(&pool.lock);
     maio_cond_destroy(&pool.notify);
