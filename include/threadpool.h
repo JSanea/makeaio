@@ -24,7 +24,7 @@ typedef struct {
 typedef struct {
     maio_thread_t* threads;  // Array of worker threads
     u32 thread_count;        // Number of threads in the pool
-    queue_t task_queue;      // Queue to hold tasks
+    queue_t* task_queue;      // Queue to hold tasks
     maio_mutex_t lock;       // Mutex to protect access to the task queue
     maio_cond_t notify;      // Condition variable to signal worker threads
     bool shut_down;          // Flag to indicate if the pool is shutting down
