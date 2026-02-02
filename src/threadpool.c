@@ -17,14 +17,11 @@ static void* maio_worker(void* arg){
     while(true){
         maio_mutex_lock(&pool->lock);
 
-        bool empty = is_empty(&pool->task_queue);
-        bool shutting_down = pool->shut_down;
-
-        while(empty && !shutting_down){
+        while(is_empty(&pool->task_queue) && !pool->shut_down){
             maio_cond_wait(&pool->notify, &pool->lock);
         }
 
-        if(empty && shutting_down){
+        if(is_empty(&pool->task_queue) && pool->shut_down){
             maio_mutex_unlock(&pool->lock);
             break;
         }
